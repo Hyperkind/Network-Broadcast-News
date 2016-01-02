@@ -10,8 +10,16 @@ var server = net.createServer(connectionListener);
 
 // Connection listener
 function connectionListener (socket) {
-  // Visualize client connecting to server
-  console.log('Client connected!');
+
+  // Announces when client connects
+  socket.on('data', function (data) {
+    console.log('Connected: ' + socket.remoteAddress + ':' + socket.remotePort);
+  });
+
+  // Announces when client disconnects
+  socket.on('end', function (data) {
+    console.log('Closed: ' + socket.remoteAddress + ':' + socket.remotePort);
+  });
 
   // Set encoding to utf8, because string!
   socket.setEncoding('utf8');
@@ -22,9 +30,9 @@ function connectionListener (socket) {
   });
 }
 
-// Opens up server for connections
-server.listen(PORT, HOST, function () {
-  address = server.address();
-  console.log('opened server on %j', address);
-  // console.log('Server listening on ' + PORT + HOST);
-});
+  // Opens up server for connections
+  server.listen(PORT, HOST, function () {
+    address = server.address();
+    // console.log('opened server on %j', address);
+    console.log('Server listening on: ' + address);
+  });
