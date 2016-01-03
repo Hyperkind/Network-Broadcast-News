@@ -12,9 +12,22 @@ socket.on('connect', function () {
 });
 
 socket.on('data', function (data) {
-  console.log(data.toString());
-  socket.end();
+  console.log(data);
 });
+
+socket.setEncoding('utf8');
+
+// socket.write('data', function (data) {
+//   console.log(data);
+// });
+
+process.stdin.on('data', function (data) {
+  socket.write(data);
+});
+
+// process.stdout.on('data', function (data) {
+//   socket.write(data);
+// });
 
 // Connect to server
 socket.connect(PORT);
